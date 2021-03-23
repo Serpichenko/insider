@@ -11,7 +11,14 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(), UserModule, SubscriberModule, AccountModule, AuthModule, UsersModule],
+  imports: [
+    TypeOrmModule.forRoot(),
+    UserModule,
+    SubscriberModule,
+    AccountModule,
+    AuthModule,
+    UsersModule,
+  ],
   controllers: [AppController, UserController],
   providers: [AppService, UserService],
 })
