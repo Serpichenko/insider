@@ -24,7 +24,7 @@ export class AccountService {
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} account`;
+    return this.accountsRepository.findOne(id, { relations: ['user'] });
   }
 
   update(id: number, updateAccountDto: UpdateAccountDto) {

@@ -1,22 +1,29 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  JoinColumn,
+} from 'typeorm';
 
 import { Subscriber } from '../../subscriber/entities/subscriber.entity';
+import { Account } from '../../account/entities/account.entity';
 
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ name: 'user_id' })
   userId: string;
 
-  @Column({ type: 'bigint' })
+  @Column({ name: 'account_id', type: 'bigint' })
   accountId: string;
 
-  @Column()
+  @Column({ name: 'user_token' })
   userToken: string;
 
-  @Column({ default: true })
+  @Column({ name: 'is_admin', default: true })
   isAdmin: boolean;
 
   @Column()
@@ -26,5 +33,10 @@ export class User {
   subscribecost: string;
 
   @OneToMany(() => Subscriber, (subscriber) => subscriber.user)
+  @JoinColumn({ name: 'id', referencedColumnName: 'user_id' })
   subscribers: Subscriber[];
+
+  @OneToMany(() => Account, (account) => account.user)
+  @JoinColumn({ name: 'id', referencedColumnName: 'user_id' })
+  accounts: Account[];
 }
