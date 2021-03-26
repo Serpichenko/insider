@@ -42,6 +42,6 @@ export class SubscriberService {
   }
 
   remove(id: number) {
-    return `This action removes a #${id} subscriber`;
+    return this.subscriberRepository.delete({ id: id });
   }
 }
