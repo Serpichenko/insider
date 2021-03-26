@@ -1,1 +1,4 @@
-export class CreateSubscriberDto {}
+export class CreateSubscriberDto {
+  userId: number;
+  subscriberTo: number;
+}

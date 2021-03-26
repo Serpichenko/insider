@@ -16,7 +16,10 @@ export class SubscriberController {
   constructor(private readonly subscriberService: SubscriberService) {}
 
   @Post()
-  create(@Body() createSubscriberDto: CreateSubscriberDto) {
+  create(
+    @Body()
+    createSubscriberDto: CreateSubscriberDto,
+  ) {
     return this.subscriberService.create(createSubscriberDto);
   }
 

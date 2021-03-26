@@ -15,20 +15,30 @@ export class SubscriberService {
     private subscriberRepository: Repository<Subscriber>,
   ) {}
 
-  create(createSubscriberDto: CreateSubscriberDto) {
-    return 'This action adds a new subscriber';
+  async create(createSubscriberDto: CreateSubscriberDto) {
+    const subscriber = new Subscriber();
+    subscriber.userId = createSubscriberDto.userId;
+    subscriber.subscriberTo = createSubscriberDto.subscriberTo;
+    const newSubscriber = await this.subscriberRepository.save(subscriber);
+    return newSubscriber;
   }
 
   findAll() {
-    return `This action returns all subscriber`;
+    return this.subscriberRepository.find({ relations: ['user'] });
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} subscriber`;
+    return this.subscriberRepository.findOne(id, { relations: ['user'] });
   }
 
-  update(id: number, updateSubscriberDto: UpdateSubscriberDto) {
-    return `This action updates a #${id} subscriber`;
+  async update(id: number, updateSubscriberDto: UpdateSubscriberDto) {
+    const updated = {
+      id: id,
+      userId: updateSubscriberDto.userId,
+      subscriberTo: updateSubscriberDto.subscriberTo,
+    };
+    const subscriber = await this.subscriberRepository.save(updated);
+    return { subscriber };
   }
 
   remove(id: number) {
