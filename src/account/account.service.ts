@@ -15,8 +15,14 @@ export class AccountService {
     private accountsRepository: Repository<Account>,
   ) {}
 
-  create(createAccountDto: CreateAccountDto) {
-    return 'This action adds a new account';
+  async create(createAccountDto: CreateAccountDto) {
+    const account = new Account();
+    account.userId = createAccountDto.userId;
+    account.totalYearSubs = createAccountDto.totalYearSubs;
+    account.totalMonthSubs = createAccountDto.totalMonthSubs;
+    account.balance = createAccountDto.balance;
+    const newSubscriber = await this.accountsRepository.save(account);
+    return newSubscriber;
   }
 
   findAll() {
@@ -27,8 +33,16 @@ export class AccountService {
     return this.accountsRepository.findOne(id, { relations: ['user'] });
   }
 
-  update(id: number, updateAccountDto: UpdateAccountDto) {
-    return `This action updates a #${id} account`;
+  async update(id: number, updateAccountDto: UpdateAccountDto) {
+    const updated = {
+      id: id,
+      userId: updateAccountDto.userId,
+      totalYearSubs: updateAccountDto.totalYearSubs,
+      totalMonthSubs: updateAccountDto.totalMonthSubs,
+      balance: updateAccountDto.balance,
+    };
+    const subscriber = await this.accountsRepository.save(updated);
+    return { subscriber };
   }
 
   remove(id: number) {
