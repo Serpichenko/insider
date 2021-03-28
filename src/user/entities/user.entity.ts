@@ -23,6 +23,9 @@ export class User {
   @Column()
   email: string;
 
+  @Column({ name: 'email_confirmed', default: false })
+  emailConfirmed: boolean;
+
   @Column({ name: 'user_id' })
   userId: string;
 
